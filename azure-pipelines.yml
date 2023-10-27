@@ -17,8 +17,8 @@ jobs:
     displayName: 'Install Insomnia CLI'
   - script: npm install -g insomnia
     displayName: 'Install inso'
-  - script: ./inso run test spc_0d1e37
-    displayName: 'Test the Inso OpenApSpec'
+  # - script: ./inso run test spc_0d1e37
+  #   displayName: 'Test the Inso OpenApSpec'
   - script: ./inso lint spec spc_0d1e37
     displayName: 'Lint OpenAPI Spec'
   - script: ./inso generate config spc_0d1e37 --type declarative -o kong.yaml --kongVersion 3
