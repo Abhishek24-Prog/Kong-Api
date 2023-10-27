@@ -1,19 +1,32 @@
-# Starter pipeline
-# Start with a minimal pipeline that you can customize to build and deploy your code.
-# Add steps that build, run tests, deploy, and more:
-# https://aka.ms/yaml
-
 trigger:
 - main
 
 pool:
-  vmImage: ubuntu-latest
+  vmImage: 'ubuntu-latest'
 
-steps:
-- script: echo Hello, world!
-  displayName: 'Run a one-line script'
-
-- script: |
-    echo Add other tasks to build, test, and deploy your project.
-    echo See https://aka.ms/yaml
-  displayName: 'Run a multi-line script'
+jobs:
+- job: OAS_To_KONG
+  steps:
+  - task: UsePythonVersion@0
+    inputs:
+      versionSpec: '3.x'
+      addToPath: true
+  - script: |
+      wget https://github.com/Kong/insomnia/releases/download/lib%403.14.0-beta.1/inso-linux-3.14.0-beta.1.tar.xz
+      tar -xf inso-linux-3.14.0-beta.1.tar.xz
+    displayName: 'Install Insomnia CLI'
+  - script: npm install -g insomnia
+    displayName: 'Install inso'
+  - script: ./inso run test spc_0d1e37
+    displayName: 'Test the Inso OpenApSpec'
+  - script: ./inso lint spec spc_0d1e37
+    displayName: 'Lint OpenAPI Spec'
+  - script: ./inso generate config spc_0d1e37 --type declarative -o kong.yaml --kongVersion 3
+    displayName: 'Generate kong.yaml'
+  - script: |
+      curl -sL https://github.com/kong/deck/releases/download/v1.17.2/deck_1.17.2_linux_amd64.tar.gz -o deck.tar.gz
+      tar -xf deck.tar.gz -C /tmp
+      sudo cp /tmp/deck /usr/local/bin/
+    displayName: 'Install deck CLI'
+  - script: deck sync --kong-addr $(KONG_MANAGER) -s kong.yaml
+    displayName: 'Deploy to Kong'
