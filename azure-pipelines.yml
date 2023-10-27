@@ -28,5 +28,5 @@ jobs:
       tar -xf deck.tar.gz -C /tmp
       sudo cp /tmp/deck /usr/local/bin/
     displayName: 'Install deck CLI'
-  - script: deck sync --kong-addr $(KONG_MANAGER) -s kong.yaml
+  - script: deck sync --kong-addr http://13.53.126.79:8001 -s kong.yaml
     displayName: 'Deploy to Kong'
