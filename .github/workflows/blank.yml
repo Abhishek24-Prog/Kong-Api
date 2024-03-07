@@ -12,7 +12,7 @@ jobs:
     steps:
     - name: Checkout Code  # Checkout the code from the repository
       uses: actions/checkout@v2
-
+#
     - name: Install Insomnia CLI  # Install Insomnia CLI for linting and generating Kong configuration
       run: |
         wget https://github.com/Kong/insomnia/releases/download/lib%403.14.0-beta.1/inso-linux-3.14.0-beta.1.tar.xz
