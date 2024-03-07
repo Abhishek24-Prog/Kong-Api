@@ -41,7 +41,7 @@ jobs:
           sudo cp /tmp/deck /usr/local/bin/
 
     - name: Deploy to Kong  # Sync the Kong configuration to Kong API Gateway
-      run: deck gateway sync --konnect-addr https://us.api.konghq.com --konnect-token kpat_eohTcrjXdtiRRmeU4fhFss1kPOUhYTdQxzNXuGMTMXMgQii7O --konnect-control-plane-name NovigoAPIM kong.yaml
+      run: deck gateway sync --konnect-addr https://us.api.konghq.com --konnect-token kpat_eohTcrjXdtiRRmeU4fhFss1kPOUhYTdQxzNXuGMTMXMgQii7O --konnect-control-plane-name Kong_Gateway_ApiOpss kong.yaml
            # deck gateway sync --konnect-addr https://eu.api.konghq.com --konnect-token kpat_xxxxx --konnect-control-plane-name default plugin.yaml
 
       # run: deck sync -s kong.yaml   --kong-addr  http://35.244.40.218:8001
