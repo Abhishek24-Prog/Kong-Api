@@ -41,7 +41,7 @@ jobs:
           sudo cp /tmp/deck /usr/local/bin/
 
     - name: Deploy to Kong  # Sync the Kong configuration to Kong API Gateway
-      run: deck gateway sync --headers --konnect-add "https://us.api.konghq.tech/v2/control-planes/e00b5bd0-4f63-4bc9-bc5e-4ff918dbe067" --konnect-token "kpat_xBGV8TSeHAGSFoeUKL85IfmFzrDBdIf7MvwGJAahJGtgt2Z8y" kong.yaml
+      run: deck gateway sync --konnect-add "https://us.api.konghq.tech/v2/control-planes/e00b5bd0-4f63-4bc9-bc5e-4ff918dbe067" --konnect-token "kpat_xBGV8TSeHAGSFoeUKL85IfmFzrDBdIf7MvwGJAahJGtgt2Z8y" kong.yaml
    
 
       # run: deck sync -s kong.yaml   --kong-addr  http://35.244.40.218:8001
