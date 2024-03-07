@@ -19,8 +19,8 @@ jobs:
         tar -xf inso-linux-3.14.0-beta.1.tar.xz
     
 
-    - name: Installing NodeJs
-      uses: actions/setup-node@v1
+    # - name: Installing NodeJs
+    #   uses: actions/setup-node@v1
       
     - name: Installing inso
       run:  npm install -g insomnia
