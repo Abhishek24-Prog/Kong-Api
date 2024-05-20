@@ -29,8 +29,8 @@ jobs:
       #   echo "KONG_ADMIN_API=${KONG_ADMIN_API}"
       #   echo "KONG_ADMIN_TOKEN=${KONG_ADMIN_TOKEN}"
 
-    - name: Create workspace
-      run: curl -i -X POST http://172.16.20.71:8001/services -d name = aarzoo -d url=http://mockbin.org
+    # - name: Create workspace
+    #   run: curl -i -X POST http://172.16.20.71:8001/services -d name = aarzoo -d url=http://mockbin.org
 
     # - name: Installing NodeJs
     #   uses: actions/setup-node@v1
@@ -53,9 +53,8 @@ jobs:
           tar -xf deck.tar.gz -C /tmp
           sudo cp /tmp/deck /usr/local/bin/
 
-    # - name: Deploy to Kong  # Sync the Kong configuration to Kong API Gateway
-    #   run: deck gateway sync --konnect-addr https://us.api.konghq.com --konnect-token kpat_eohTcrjXdtiRRmeU4fhFss1kPOUhYTdQxzNXuGMTMXMgQii7O --konnect-control-plane-name Kong_Gateway_Apiops kong.yaml
-    #        # deck gateway sync --konnect-addr https://eu.api.konghq.com --konnect-token kpat_xxxxx --konnect-control-plane-name default plugin.yaml
+    - name: Deploy to Kong  # Sync the Kong configuration to Kong API Gateway
+      # run: deck gateway sync --konnect-addr https://us.api.konghq.com --konnect-token kpat_eohTcrjXdtiRRmeU4fhFss1kPOUhYTdQxzNXuGMTMXMgQii7O --konnect-control-plane-name Kong_Gateway_Apiops kong.yaml
+           # deck gateway sync --konnect-addr https://eu.api.konghq.com --konnect-token kpat_xxxxx --konnect-control-plane-name default plugin.yaml
 
-      # run: deck sync -s kong.yaml   --kong-addr  http://35.244.40.218:8001
-
+      run: deck sync -s kong.yaml --workspace WorkspaceA  --kong-addr  http://172.16.20.71:8001
