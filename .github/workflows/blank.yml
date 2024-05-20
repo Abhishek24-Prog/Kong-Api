@@ -3,7 +3,7 @@ name: Demo to Delpoy OAS to Kong # Specify the name of the deployment
 on:
   push:
     branches:
-      - main  # Trigger the deployment when pushing to the main branch
+      - Abhi_Prog  # Trigger the deployment when pushing to the main branch
 #
 jobs:
   OAS_To_KONG:
@@ -12,37 +12,96 @@ jobs:
     steps:
     - name: Checkout Code  # Checkout the code from the repository
       uses: actions/checkout@v2
-#
-    - name: Install Insomnia CLI  # Install Insomnia CLI for linting and generating Kong configuration
+    - name: Set up environment variables
+      env:
+        KONG_ADMIN_API: http://172.16.20.71:8001
+        # KONG_ADMIN_TOKEN: ${{ secrets.KONG_ADMIN_TOKEN }}
+        # WORKSPACE_NAME: example-workspace
+        # TEAM_NAME: example-team
+        # USER_NAME: example-user
+        # USER_ROLE: example-role
+      # run: |
+      #   echo "KONG_ADMIN_API=${KONG_ADMIN_API}"
+      #   echo "KONG_ADMIN_TOKEN=${KONG_ADMIN_TOKEN}"
+
+    - name: Create workspace
       run: |
-        wget https://github.com/Kong/insomnia/releases/download/lib%403.14.0-beta.1/inso-linux-3.14.0-beta.1.tar.xz
-        tar -xf inso-linux-3.14.0-beta.1.tar.xz
+        curl -i -X POST http://172.16.20.71:8001/workspaces \
+        --header "Content-Type: application/json" \
+        --data '{
+          "name": "Aarzoo"
+        }'
+
+    # - name: Create RBAC team
+    #   run: |
+    #     curl -i -X POST ${KONG_ADMIN_API}/${WORKSPACE_NAME}/rbac/teams \
+    #     --header "Authorization: ${KONG_ADMIN_TOKEN}" \
+    #     --header "Content-Type: application/json" \
+    #     --data '{
+    #       "name": "'"${TEAM_NAME}"'",
+    #       "comment": "Team for example users"
+    #     }'
+
+    # - name: Create RBAC user
+    #   run: |
+    #     curl -i -X POST ${KONG_ADMIN_API}/${WORKSPACE_NAME}/rbac/users \
+    #     --header "Authorization: ${KONG_ADMIN_TOKEN}" \
+    #     --header "Content-Type: application/json" \
+    #     --data '{
+    #       "username": "'"${USER_NAME}"'",
+    #       "custom_id": "example-custom-id",
+    #       "comment": "Example user"
+    #     }'
+
+    # - name: Create RBAC role
+    #   run: |
+    #     curl -i -X POST ${KONG_ADMIN_API}/${WORKSPACE_NAME}/rbac/roles \
+    #     --header "Authorization: ${KONG_ADMIN_TOKEN}" \
+    #     --header "Content-Type: application/json" \
+    #     --data '{
+    #       "name": "'"${USER_ROLE}"'",
+    #       "comment": "Role for example user"
+    #     }'
+
+    # - name: Assign role to user
+    #   run: |
+    #     curl -i -X POST ${KONG_ADMIN_API}/${WORKSPACE_NAME}/rbac/users/${USER_NAME}/roles \
+    #     --header "Authorization: ${KONG_ADMIN_TOKEN}" \
+    #     --header "Content-Type: application/json" \
+    #     --data '{
+    #       "roles": ["'"${USER_ROLE}"'"]
+    #     }'
+#
+    # - name: Install Insomnia CLI  # Install Insomnia CLI for linting and generating Kong configuration
+    #   run: |
+    #     wget https://github.com/Kong/insomnia/releases/download/lib%403.14.0-beta.1/inso-linux-3.14.0-beta.1.tar.xz
+    #     tar -xf inso-linux-3.14.0-beta.1.tar.xz
     
 
-    # - name: Installing NodeJs
-    #   uses: actions/setup-node@v1
+    # # - name: Installing NodeJs
+    # #   uses: actions/setup-node@v1
       
-    - name: Installing inso
-      run:  npm install -g insomnia
+    # - name: Installing inso
+    #   run:  npm install -g insomnia
       
-    - name: Test the Inso OpenApSpec
-      run: ./inso run test spc_0d1e37
+    # - name: Test the Inso OpenApSpec
+    #   run: ./inso run test spc_0d1e37
       
-    - name: Lint OpenAPI Spec  # Lint the OpenAPI spec using Insomnia CLI
-      run: ./inso lint spec spc_0d1e37
+    # - name: Lint OpenAPI Spec  # Lint the OpenAPI spec using Insomnia CLI
+    #   run: ./inso lint spec spc_0d1e37
       
-    - name: Generate kong.yaml  # Generate Kong configuration in declarative format
-      run: ./inso generate config spc_0d1e37 --type declarative -o kong.yaml --kongVersion 3
+    # - name: Generate kong.yaml  # Generate Kong configuration in declarative format
+    #   run: ./inso generate config spc_0d1e37 --type declarative -o kong.yaml --kongVersion 3
       
-    - name: install deck CLI  # Install deck CLI for syncing Kong configuration
-      run: |
-          curl -sL https://github.com/kong/deck/releases/download/v1.35.0/deck_1.35.0_linux_amd64.tar.gz -o deck.tar.gz
-          tar -xf deck.tar.gz -C /tmp
-          sudo cp /tmp/deck /usr/local/bin/
+    # - name: install deck CLI  # Install deck CLI for syncing Kong configuration
+    #   run: |
+    #       curl -sL https://github.com/kong/deck/releases/download/v1.35.0/deck_1.35.0_linux_amd64.tar.gz -o deck.tar.gz
+    #       tar -xf deck.tar.gz -C /tmp
+    #       sudo cp /tmp/deck /usr/local/bin/
 
-    - name: Deploy to Kong  # Sync the Kong configuration to Kong API Gateway
-      run: deck gateway sync --konnect-addr https://us.api.konghq.com --konnect-token kpat_eohTcrjXdtiRRmeU4fhFss1kPOUhYTdQxzNXuGMTMXMgQii7O --konnect-control-plane-name Kong_Gateway_Apiops kong.yaml
-           # deck gateway sync --konnect-addr https://eu.api.konghq.com --konnect-token kpat_xxxxx --konnect-control-plane-name default plugin.yaml
+    # - name: Deploy to Kong  # Sync the Kong configuration to Kong API Gateway
+    #   run: deck gateway sync --konnect-addr https://us.api.konghq.com --konnect-token kpat_eohTcrjXdtiRRmeU4fhFss1kPOUhYTdQxzNXuGMTMXMgQii7O --konnect-control-plane-name Kong_Gateway_Apiops kong.yaml
+    #        # deck gateway sync --konnect-addr https://eu.api.konghq.com --konnect-token kpat_xxxxx --konnect-control-plane-name default plugin.yaml
 
-      # run: deck sync -s kong.yaml   --kong-addr  http://35.244.40.218:8001
+    #   # run: deck sync -s kong.yaml   --kong-addr  http://35.244.40.218:8001
 
