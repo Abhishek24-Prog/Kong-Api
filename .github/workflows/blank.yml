@@ -17,7 +17,25 @@ jobs:
       run: |
         wget https://github.com/Kong/insomnia/releases/download/lib%403.14.0-beta.1/inso-linux-3.14.0-beta.1.tar.xz
         tar -xf inso-linux-3.14.0-beta.1.tar.xz
-    
+    # - name: Set up environment variables
+    #   env:
+    #     KONG_ADMIN_API: http://172.16.20.71:8001
+        # KONG_ADMIN_TOKEN: ${{ secrets.KONG_ADMIN_TOKEN }}
+        # WORKSPACE_NAME: example-workspace
+        # TEAM_NAME: example-team
+        # USER_NAME: example-user
+        # USER_ROLE: example-role
+      # run: |
+      #   echo "KONG_ADMIN_API=${KONG_ADMIN_API}"
+      #   echo "KONG_ADMIN_TOKEN=${KONG_ADMIN_TOKEN}"
+
+    - name: Create workspace
+      run: |
+        curl -i -X POST http://172.16.20.71:8001/workspaces \
+        --header "Content-Type: application/json" \
+        --data '{
+          "name": "Aarzoo"
+        }'
 
     # - name: Installing NodeJs
     #   uses: actions/setup-node@v1
@@ -40,9 +58,9 @@ jobs:
           tar -xf deck.tar.gz -C /tmp
           sudo cp /tmp/deck /usr/local/bin/
 
-    - name: Deploy to Kong  # Sync the Kong configuration to Kong API Gateway
-      run: deck gateway sync --konnect-addr https://us.api.konghq.com --konnect-token kpat_eohTcrjXdtiRRmeU4fhFss1kPOUhYTdQxzNXuGMTMXMgQii7O --konnect-control-plane-name Kong_Gateway_Apiops kong.yaml
-           # deck gateway sync --konnect-addr https://eu.api.konghq.com --konnect-token kpat_xxxxx --konnect-control-plane-name default plugin.yaml
+    # - name: Deploy to Kong  # Sync the Kong configuration to Kong API Gateway
+    #   run: deck gateway sync --konnect-addr https://us.api.konghq.com --konnect-token kpat_eohTcrjXdtiRRmeU4fhFss1kPOUhYTdQxzNXuGMTMXMgQii7O --konnect-control-plane-name Kong_Gateway_Apiops kong.yaml
+    #        # deck gateway sync --konnect-addr https://eu.api.konghq.com --konnect-token kpat_xxxxx --konnect-control-plane-name default plugin.yaml
 
       # run: deck sync -s kong.yaml   --kong-addr  http://35.244.40.218:8001
 
