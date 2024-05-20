@@ -30,12 +30,7 @@ jobs:
       #   echo "KONG_ADMIN_TOKEN=${KONG_ADMIN_TOKEN}"
 
     - name: Create workspace
-      run: |
-        curl -i -X POST http://172.16.20.71:8001/workspaces \
-        --header "Content-Type: application/json" \
-        --data '{
-          "name": "Aarzoo"
-        }'
+      run: curl -i -X POST http://172.16.20.71:8001/services -d name = aarzoo -d url=http://mockbin.org
 
     # - name: Installing NodeJs
     #   uses: actions/setup-node@v1
