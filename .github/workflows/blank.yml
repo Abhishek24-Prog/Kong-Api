@@ -56,5 +56,5 @@ jobs:
     - name: Deploy to Kong  # Sync the Kong configuration to Kong API Gateway
       # run: deck gateway sync --konnect-addr https://us.api.konghq.com --konnect-token kpat_eohTcrjXdtiRRmeU4fhFss1kPOUhYTdQxzNXuGMTMXMgQii7O --konnect-control-plane-name Kong_Gateway_Apiops kong.yaml
            # deck gateway sync --konnect-addr https://eu.api.konghq.com --konnect-token kpat_xxxxx --konnect-control-plane-name default plugin.yaml
-
-      run: deck gateway sync --kong-addr https://172.16.20.71 kong.yaml --workspace WorkspaceA
+      run: deck gateway sync --kong-addr http://34.171.166.55:8001 kong.yaml 
+      # run: deck gateway sync --kong-addr http://34.171.166.55:8001 kong.yaml --workspace WorkspaceA
