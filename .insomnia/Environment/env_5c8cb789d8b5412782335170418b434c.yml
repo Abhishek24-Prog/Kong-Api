@@ -1,0 +1,14 @@
+_id: env_5c8cb789d8b5412782335170418b434c
+type: Environment
+parentId: env_cd3b246468264fbfb5aac48f94bae83a
+modified: 1715332208403
+created: 1715332208403
+name: OpenAPI env httpbin.org
+data:
+  scheme: http
+  base_path: ""
+  host: httpbin.org
+dataPropertyOrder: null
+color: null
+isPrivate: false
+metaSortKey: 1715332208403

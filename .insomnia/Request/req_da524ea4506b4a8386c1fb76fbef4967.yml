@@ -1,0 +1,23 @@
+_id: req_da524ea4506b4a8386c1fb76fbef4967
+type: Request
+parentId: wrk_9435ceff899849e0ba3d4e1740459900
+modified: 1723990739175
+created: 1723989455615
+url: "{{ _.base_url }}/json"
+name: New Request
+description: ""
+method: GET
+body: {}
+parameters: []
+headers:
+  - name: User-Agent
+    value: Insomnia/2023.5.4
+authentication: {}
+metaSortKey: -1723989455615
+isPrivate: false
+settingStoreCookies: true
+settingSendCookies: true
+settingDisableRenderRequestBody: false
+settingEncodeUrl: true
+settingRebuildPath: true
+settingFollowRedirects: global

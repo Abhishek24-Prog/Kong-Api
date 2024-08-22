@@ -1,0 +1,97 @@
+_id: spc_3c2b64a85fa44fd0832d359fe565a117
+type: ApiSpec
+parentId: wrk_9435ceff899849e0ba3d4e1740459900
+modified: 1724320918448
+created: 1709834363493
+fileName: Api-Opps.yaml
+contents: >-
+  openapi: 3.0.0
+
+  info:
+    description: OpenAPI Specification for the Kong Konect API
+    version: 1.0.3
+    title: Kong Konnect APIM 
+    contact:
+      email: kong.konnect@gmail.com
+      name: Abhishek
+  tags:
+    - name: JSON
+    - name: XML
+
+    
+  x-kong-upstream-defaults:
+    hash_on: ip
+    healthchecks:
+      passive:
+        unhealthy:
+          http_failures: 3
+          tcp_failures: 3
+          timeouts: 3
+  paths:
+    /json:
+     get:
+       tags:
+         - JSON
+       description: To fetch details of Mock Response
+       x-kong-plugin-request-termination:
+          # the "x-kong-plugin-<plugin name>" directive can be used to add plugins
+          name: request-termination
+          config:
+            status_code: 403
+       responses:
+        "200":
+          description: 200 response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/mocks"
+       operationId: getJSON
+    /xml:
+     get:
+       tags:
+         - XML
+       description: To fetch details of Mock Response
+       responses:
+        "200":
+          description: 200 response
+          content:
+            application/xml:
+              schema:
+                $ref: "#/components/schemas/mockxml"
+       operationId: getXML
+  components: 
+    schemas:
+     mocks:
+      type: object
+      properties:
+       firstname:
+        type: string
+        default: "John"
+       lastname:
+        type: string 
+        default: "Doe"
+       city:
+        type: string 
+        default: "San Jose"
+       state:
+        type: string 
+        default: "CA"
+     mockxml:
+      type: object
+      properties:
+       city:
+        type: string 
+        default: "San Jose"
+       firstname:
+        type: string 
+        default: "John"
+       lastname:
+        type: string 
+        default: "Doe"
+       state:
+        type: string 
+        default: "CA"
+  servers:
+    - url: http://httpbin.org
+      description: Local server
+contentType: yaml
